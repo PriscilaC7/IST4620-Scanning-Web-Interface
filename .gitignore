@@ -1,0 +1,13 @@
+# Environment variables — never commit secrets
+.env
+
+# Node.js dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.vscode/
+.idea/

@@ -1,0 +1,14 @@
+{
+  "name": "scanning-ai-tool",
+  "version": "1.0.0",
+  "description": "AI-assisted scanning web interface for authorized lab use only",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.36.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
+}

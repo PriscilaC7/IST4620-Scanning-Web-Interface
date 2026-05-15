@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scanning AI Web Interface</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────── -->
+  <header>
+    <div class="header-inner">
+      <span class="header-icon">&#128274;</span>
+      <h1>Scanning AI Web Interface</h1>
+      <span class="badge">Lab Tool</span>
+    </div>
+  </header>
+
+  <!-- ── Disclaimer banner ────────────────────────── -->
+  <div class="disclaimer">
+    <strong>&#9888; AUTHORIZED LAB USE ONLY</strong> &mdash;
+    This tool is restricted to the configured lab target. Scanning hosts you do not have explicit permission to test is illegal and unethical.
+    Use only within your assigned course or lab environment.
+  </div>
+
+  <main>
+
+    <!-- ── Scan panel ─────────────────────────────── -->
+    <section class="card" id="scan-panel">
+      <h2>&#128270; Network Scan</h2>
+
+      <div class="field-row">
+        <label for="target-input">Approved Lab Target</label>
+        <!-- Target is loaded from the server and locked to APPROVED_TARGET -->
+        <input type="text" id="target-input" readonly placeholder="Loading target…" />
+        <span class="field-hint">Set in <code>.env</code> &rarr; <code>APPROVED_TARGET</code></span>
+      </div>
+
+      <div class="field-row">
+        <label>Scan Type</label>
+        <div class="scan-type-box">
+          <code>nmap -sT --top-ports 20 -T3 [target]</code>
+          <span class="scan-type-note">Light TCP connect scan &mdash; top 20 ports, normal timing, no aggression flags</span>
+        </div>
+      </div>
+
+      <button id="scan-btn" class="btn-primary">&#9654; Run Light Scan</button>
+
+      <!-- Spinner shown while scan is running -->
+      <div id="scan-spinner" class="spinner hidden">
+        <div class="spinner-ring"></div>
+        <span>Scanning&hellip; (may take up to 30 s)</span>
+      </div>
+    </section>
+
+    <!-- ── Raw output ──────────────────────────────── -->
+    <section class="card hidden" id="raw-panel">
+      <h2>
+        Raw Output
+        <button class="btn-toggle" id="raw-toggle">Hide</button>
+      </h2>
+      <pre id="raw-output"></pre>
+    </section>
+
+    <!-- ── Parsed results table ───────────────────── -->
+    <section class="card hidden" id="results-panel">
+      <h2>&#128203; Parsed Results</h2>
+      <div class="table-wrap">
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th>Port</th>
+              <th>Protocol</th>
+              <th>State</th>
+              <th>Service</th>
+            </tr>
+          </thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </div>
+      <p id="no-ports-msg" class="muted hidden">No open ports found in top 20.</p>
+    </section>
+
+    <!-- ── AI Assistant panel ─────────────────────── -->
+    <section class="card" id="ai-panel">
+      <h2>&#129302; AI Assistant</h2>
+
+      <p class="muted">
+        The AI assistant explains scan results, identifies services, and generates a short lab report.
+        Your API key is read from <code>.env</code> on the server &mdash; it never touches the browser.
+      </p>
+
+      <div id="ai-no-scan" class="info-box">
+        Run a scan first, then use the buttons below to analyze results.
+      </div>
+
+      <!-- Controls shown after a successful scan -->
+      <div id="ai-controls" class="hidden">
+        <div class="ai-btn-row">
+          <button id="ai-report-btn" class="btn-secondary">&#128196; Generate Report</button>
+        </div>
+
+        <div class="field-row">
+          <label for="ai-question">Ask a custom question</label>
+          <textarea id="ai-question" rows="2" placeholder="e.g. What does port 80 being open tell us?"></textarea>
+          <button id="ai-ask-btn" class="btn-secondary">&#128172; Ask</button>
+        </div>
+      </div>
+
+      <!-- Spinner for AI calls -->
+      <div id="ai-spinner" class="spinner hidden">
+        <div class="spinner-ring"></div>
+        <span>Asking AI&hellip;</span>
+      </div>
+
+      <!-- AI response output -->
+      <div id="ai-response" class="ai-response hidden"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>For authorized class/lab use only &mdash; Scanning AI Web Interface</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\prisc\\\\OneDrive\\\\Documents\\\\scanning-ai-tool\" -Recurse -Exclude \"node_modules\" | Where-Object { $_.FullName -notmatch \"node_modules\" } | Select-Object FullName)",
+      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\prisc\\\\OneDrive\\\\Documents\\\\scanning-ai-tool\" -Name | Where-Object { $_ -ne \"node_modules\" })"
+    ]
+  }
+}
